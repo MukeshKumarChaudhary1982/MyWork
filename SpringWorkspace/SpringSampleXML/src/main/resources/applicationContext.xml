@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-	<bean name="customerRepository" class="com.dummy.repository.HibernareCustomerRepositoryImpl"/>
+	<bean name="customerRepository" class="com.dummy.repository.HibernareCustomerRepositoryImpl">
+<!-- 	<property name="dbUsername" value="${dbUsername}"/> -->
+	</bean>
 <!-- 	<bean name="customerRepository2" class="com.dummy.repository.HibernareCustomerRepositoryImpl2"/> -->
 	
-	<bean name="customerService" class="com.dummy.service.CustomerServiceImpl" autowire="byType">
+	<bean name="customerService" 
+	 class="com.dummy.service.CustomerServiceImpl"
+	 autowire="byType"
+	 scope="prototype">
 <!-- 	<property name="customerRepository" ref="customerRepository"></property> -->
 <!-- <constructor-arg index="0" ref="customerRepository"></constructor-arg> -->
 	</bean>
 	
-
+<context:property-placeholder location="app.properties"/>
+<context:annotation-config/>
 </beans>
