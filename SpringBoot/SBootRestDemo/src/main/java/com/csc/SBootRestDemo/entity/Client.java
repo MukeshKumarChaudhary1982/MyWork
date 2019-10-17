@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(description="Details about Client")
 @Entity
 @Table(name="client")
 public class Client {
@@ -17,6 +21,7 @@ public class Client {
 	@Column(name="id")
 	private int id;
 	
+	@ApiModelProperty(notes="Must be atleast 4 characters")
 	@Size(min=4,message="{client.firstName}")
 	@Column(name="first_name")
 	private String firstName;

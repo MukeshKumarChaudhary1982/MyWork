@@ -2,11 +2,11 @@ package com.csc.SBootRestDemo.Controllers;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Locale;
-
+import javax.sql.DataSource;
 import javax.validation.Valid;
 
-import org.aspectj.weaver.AjAttribute.MethodDeclarationLineNumberAttribute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -19,28 +19,34 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
 import com.csc.SBootRestDemo.entity.Client;
 import com.csc.SBootRestDemo.service.ClientService;
+import com.zaxxer.hikari.HikariDataSource;
 
 @RestController
 public class ClientController {
 	
+	Logger LOGGER=LoggerFactory.getLogger(ClientController.class);
 	@Autowired
 	private ClientService clientService;
 	
 	@Autowired
 	private MessageSource messageSource;
 	
+	@Autowired
+	private DataSource dataSource;
+	
 	@Value("${application.name}")
 	private String appName;
 	
-	@GetMapping("/")
+	@GetMapping("/info")
 	public String base() {
-		
+		LOGGER.info("Max pool Size: " + ((HikariDataSource)dataSource).getMaximumPoolSize());
+		LOGGER.info("Min Idle: " + ((HikariDataSource)dataSource).getMinimumIdle());
+		LOGGER.info("connection query: " + ((HikariDataSource)dataSource).getConnectionTestQuery());
+		LOGGER.debug("Idle timeout: " + ((HikariDataSource)dataSource).getIdleTimeout());
 		return appName + LocalDateTime.now();
 	}
 	@GetMapping("/i18")
