@@ -1,5 +1,7 @@
 package com.csc.SBootRestDemo.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +16,10 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(description="Details about Client")
 @Entity
 @Table(name="client")
-public class Client {
+public class Client implements Serializable{
 
+	private static final long serialVersionUID = 1L;
+	 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
