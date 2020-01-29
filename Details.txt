@@ -1,0 +1,7 @@
+http://localhost:8080/ClientServices/swagger-ui.html
+http://localhost:8080/ClientServices/v2/api-docs
+http://localhost:8080/ClientServices/actuator
+
+mvn spring-boot:run
+mvn clean package spring-boot:repackage
+java -jar target/Client-Services-0.0.1-SNAPSHOT.jar
