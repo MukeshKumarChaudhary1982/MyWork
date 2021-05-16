@@ -1,0 +1,48 @@
+docker version
+docker run hello-world(Create Container+start container)
+--Image is file system snapshot and startup command--Its a complete bundel to run any application
+--Container is runtime environment/running process which provide share of hardware resources to run any Image, namespacing and control groups feature of linux help to run containers, Docker engine runs on linux virtual machines on windows/macos etc.
+
+--override default command- But command must be compatable with Image
+docker run <image> <command>
+docker run busybox ls, docker run busybox echo hello
+
+--Listing all running containers
+docker ps
+docker ps --all
+docker create hello-world, docker start <container ID>, docker start -a <container ID> -- -a means attach output of container to terminal.
+--Any stopped container can be restarted with start command but cannot override start command
+--Remove stopped containers
+docker system prune
+--get logs from container- can provide logs for stopped containers
+docker logs <containerID>
+--stop gives signal to stop in 10 seconds otherwise it will kill
+docker stop <containerID>, docker kill <containerID>
+
+--If some container is running, and we want some client to connect to it then client running on my OS dont know anything about running container server. 
+--We can run this client inside container
+docker exec -it <conatinerID> clinet command -- -it will attach my client with my terminal otherwise client will start but not attched to my terminal.
+docker exec -it <conatinerID> sh
+docker run it busybox sh -- to open shell command of container at start time.
+
+
+--How to build docker Images- we need to create docker file and run command 
+docker build .
+Structure of docker file
+FROM  	base image to build new image
+RUN	commands to install additional programs required for this image
+CMD 	command to start our programs at start
+
+--tagging the image
+docker build -t <mydockerid>/<project name>:<version-any nymber or simply latest>
+docker build -t mukeshkumarchaudhary/myproject:latest
+
+--we can create image by manually starting any base image and do updates by executing commands and then create image by below command
+docker commit -c "CMD 'redis-server'" CONTAINERID
+
+WORKDIR /usr/abc  --to do all user work under this directory, means files will be copied to this directory and this will be treated as kind of root for user
+COPY ./ ./ ---command t ocopy all files from working directory to image so that RN command can use these files for creating image.
+
+--Port Mapping to route traffic coming on local network to container-
+docker run -p <localnostport>:<containerport> <ContainerID>
+
